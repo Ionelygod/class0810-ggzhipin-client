@@ -10,7 +10,7 @@
 *       返回值是函数 dispatch => {xxx}
 * */
 import {AUTH_SUCCESS, AUTH_ERROR} from './action-types';
-import {reqRegister, reqLogin} from '../api';
+import {reqRegister, reqLogin, reqUpdata} from '../api';
 export const authSuccess = data => ({type:AUTH_SUCCESS, data});
 export const authError = data => ({type:AUTH_ERROR, data});
 
@@ -58,4 +58,32 @@ export const login = ({username,password}) => {
         dispatch(authError({errMsg:'网络错误，请刷新重试'}))
       })
   }
+}
+export const updata = ({header, post, company, salary, info,type}) => {
+  if(!header){
+    return authError({errMsg:'请选择头像'})
+  }else if(!post){
+    return authError({errMsg: type === 'laoban'? '请填写职位':'请填写求职岗位'})
+  }else if(type === 'laoban' && !company){
+    return authError({errMsg:'请填写公司'})
+  }else if(type === 'laoban' && !salary){
+    return authError({errMsg:'请填写职位薪资'})
+  }else if(!info){
+    return authError({errMsg: type === 'laoban'?'请填写职位要求':'请填写个人介绍'})
+  }
+
+  return dispatch => {
+    reqUpdata({header, post, company, salary, info})
+      .then(({data}) => {
+        if(data.code === 0){
+          dispatch(authSuccess(data.data))
+        }else{
+          dispatch(authError({errMsg:data.msg}))
+        }
+    })
+      .catch(err => {
+        dispatch(authError({errMsg:'网络错误，请刷新重试'}));
+      })
+  }
+
 }

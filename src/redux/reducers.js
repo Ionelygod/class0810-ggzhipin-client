@@ -13,7 +13,12 @@ const initUserState = {
   _id:'',
   type:'',
   errMsg:'',
-  rediectTo:''
+  rediectTo:'',
+  header:'',
+  post:'',
+  company:'',
+  salary:'',
+  info:''
 };
 function user(previousState = initUserState, action) {
   switch (action.type){
