@@ -9,17 +9,17 @@ const Item = TabBar.Item;
 
 class Footer extends Component{
   static propTypes = {
-    navList:PropTypes.array.isRequired
+    navList:PropTypes.array.isRequired,
+    type:PropTypes.string.isRequired
   }
   rederiectTo = path => {
     this.props.history.replace(path)
   }
     render(){
-          const type = 'laoban';
-          const filter = type === 'laoban' ? '/dashen' : '/laoban';
+          const filter = this.props.type === 'laoban' ? '/dashen' : '/laoban';
           const currNavList = this.props.navList.filter(item => item.path === filter ? false: true)
         return (
-             <TabBar>
+             <TabBar className="footer-main" >
                {
                  currNavList.map((item, index) => <Item
                    title={item.text}  key={index} icon={<img className="footer-img" src={require(`./images/${item.icon}.png`)} alt={item.text}/>}

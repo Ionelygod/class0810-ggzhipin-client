@@ -7,7 +7,16 @@
  */
 
 import {combineReducers} from 'redux';
-import {AUTH_SUCCESS, AUTH_ERROR} from './action-types';
+import {AUTH_SUCCESS,
+  AUTH_ERROR,
+  UPDATE_USER_INFO,
+  RESET_USER_INFO,
+  UPDATE_USER_LIST,
+  RESET_USER_LIST,
+  GET_CHAT_MESSAGE,
+  RESET_CHAT_MESSAGE,
+  UPDATE_CHAT_MESSAGE
+} from './action-types';
 const initUserState = {
   username:'',
   _id:'',
@@ -26,18 +35,46 @@ function user(previousState = initUserState, action) {
       return {...action.data,rediectTo:getRediectPath(action.data.type, action.data.header)}
     case AUTH_ERROR:
       return {...initUserState, ...action.data}
+    case UPDATE_USER_INFO:
+      return {...action.data,rediectTo:getRediectPath(action.data.type, action.data.header)}
+    case RESET_USER_INFO:
+      return {...initUserState, ...action.data}
     default:
       return previousState;
   }
 }
 
-// const initYyy = {};
-// function yyy(previousState = initYyy, action) {
-//   switch (action.type){
-//     default:
-//       return previousState;
-//   }
-// }
+const initUserList = [];
+function userList(previousState = initUserList, action) {
+  switch (action.type){
+    case UPDATE_USER_LIST:
+      return action.data;
+    case RESET_USER_LIST:
+      return [];
+    default:
+      return previousState;
+  }
+}
+const initChatMessagesState = {
+  users:{},
+  chatMsg:[]
+}
+function chatMessages(previousState = initChatMessagesState, action) {
+  switch (action.type){
+    case GET_CHAT_MESSAGE:
+      return action.data;
+    case RESET_CHAT_MESSAGE:
+      return initChatMessagesState;
+    case UPDATE_CHAT_MESSAGE:
+      return {
+        users: previousState.users,
+        chatMsgs: [...previousState.chatMsgs, action.data]
+      };
+    default :
+        return previousState;
+  }
+}
+
 function getRediectPath(type, header){
   let path = '';
   if(type === 'laoban'){
@@ -45,7 +82,6 @@ function getRediectPath(type, header){
   }else{
     path = '/dashen';
   }
-
   if(!header){
     path += 'info';
   }
@@ -53,5 +89,7 @@ function getRediectPath(type, header){
 }
 
 export default combineReducers({
-  user
+  user,
+  userList,
+  chatMessages
 })

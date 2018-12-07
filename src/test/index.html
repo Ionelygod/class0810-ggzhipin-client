@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+//  let arr = [4,2,6,3,4,3,2,1,22,5,1,14];
+
+////  let arr1 = arr.sort(function(a, b)  {
+////    console.log(a, b );
+////    return a - b;
+////  });
+////  console.log(arr1);
+
+//  function unique(arr) {
+//    var newArr = [];
+//
+//    for (var i = 0; i < arr.length; i++) {
+//      if (newArr.indexOf(arr[i]) === -1) {
+//        newArr.push(arr[i]);
+//      }
+//    }
+//    return newArr;
+//  }
+
+//  console.log(unique(arr));
+
+
+
+
+
+
+const obj = { selector: { to: { toutiao: "FE Coder"} }, target: [1, 2, { name: 'byted'}]};
+
+//遍历
+//function get(data, ...args){
+//  return args.map((item) => {
+//    const paths = item.split('.');
+//    let res = data;
+//    paths.map(path => {
+//      return res = res[path]
+//    });
+//    return res
+//  })
+//}
+
+
+get(obj, 'selector.to.toutiao', 'target[0]', 'target[2].name');
+
+
+//正则
+//const reg = /\[[0-9]+\]/gi;
+//const str = "target[123123]";
+//const str1 = "target[]"
+//
+//if (reg.test(str)) {
+//  console.log('test success');
+//}
+//
+//if (!reg.test(str1)) {
+//  console.log('test fail');
+////  console.log('test success');
+//}
+//
+//const matchResult = str.match(reg);
+//定义和用法
+//match() 方法可在字符串内检索指定的值，或找到一个或多个正则表达式的匹配。
+//该方法类似 indexOf() 和 lastIndexOf()，但是它返回指定的值，而不是字符串的位置。
+////console.log(reg.test(str));
+////console.log(reg.test(str1));
+//console.log(matchResult); // ["[123123]"]
+
+
+//正则匹配法
+//function get(data, ...args) {
+//  const reg = /\[[0-9]+\]/gi;
+//  return args.map((item) => {
+//    const paths = item.split('.');
+//    let res = data;
+//    paths.map((path) => {
+//      if (reg.test(path)) {
+//        const match = path.match(reg)[0];
+//        // 将target[0]里的target储存到cmd里
+//        const cmd = path.replace(match, '');
+//        // 获取数组索引
+//        const arrIndex = match.replace(/[\[\]]/gi, '');
+//        res = res[cmd][arrIndex];
+//      } else {
+//        res = res[path];
+//      }
+//    });
+//    return res;
+//  });
+//}
+
+//在后面填写没有的时候可以防止报错
+//function get(data, ...args) {
+//  const reg = /\[[0-9]+\]/gi;
+//  return args.map((item) => {
+//    const paths = item.split('.');
+//    let res = data;
+//    paths.map(path => {
+//      try {
+//        if (reg.test(path)) {
+//          const match = path.match(reg)[0];
+//          const cmd = path.replace(match, '');
+//          const arrIndex = match.replace(/[\[\]]/gi, '');
+//          res = res[cmd][arrIndex];
+//        } else {
+//          res = res[path];
+//        }
+//      } catch (err) {
+//        console.error(err);
+//        res = undefined;
+//      }
+//    });
+//    return res;
+//  });
+//}
+
+//console.log(get(obj, 'selector.to.toutiao', 'target[0]', 'target[2].name', 'asd'));
+
+//JSON转化为字符串 new Function
+//function get(data, ...args) {
+//  const res = JSON.stringify(data);
+//  console.log(res);
+//  return args.map((item) => (new Function(`try {return ${res}.${item} } catch(e) {}`))());
+//}
+
+//function get(data, ...args) {
+//  return args.map((item) => (new Function('data',`try {return data.${item} } catch(e) {}`))(data));
+//}
+//
+
+//function get(data, ...args) {
+//  return args.map((item) => {
+//    let res = data;
+//    item
+//      .replace(/\[/g, ".")
+//      .replace(/\]/g, "")
+//      .split('.')
+//      .map(path => res = res && res[path]);
+//    return res;
+//  })
+//}
+
+
+</script>
+</body>
+</html>
